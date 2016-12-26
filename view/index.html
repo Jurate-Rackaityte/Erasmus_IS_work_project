@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chat</title>
+    
+    <meta name="author" content="Natáia Rakovská" lang="sk">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <section>
+      <h2>
+        Login
+      </h2>
+      <form>
+        <p><label>Username: <input name = "username" type = "text" placeholder = "Username" required size = "25"></label></p>
+        <p><label>Password: <input name = "password" type = "password" required size = "25"></label></p> 
+        <p><input type = "submit" value = "Login!" /></p>   
+      </form>
+    </section>
+    <section>
+      <h2>
+        Register
+      </h2>
+      <p> It is fast and free. </p>
+          The fields with * are required.
+      <form method="POST" >
+        <p><label>First Name: * <input name = "fname" type = "text" placeholder = "First Name" required size = "25"></label></p>
+        <p><label>Last Name: * <input name = "lname" type = "text" placeholder = "Last Name" required size = "25"></label></p>
+        <p><label>E-mail: * <input name = "email" type = "email" placeholder = "name@domain.com" required size = "25"></label></p>
+        <p><label>Phone number: <input name = "phone_number" type = "tel" placeholder = "(###) ###-####" pattern = "\(\d{3}\) +\d{3}-\d{4}" size = "25"></label></p>
+        <p><label>Password: * <input name = "password" type = "password" required size = "25"></label></p>
+        <p><label>Confirm password: * <input name = "confirm_password" required type = "password" size = "25"></label></p>
+        <p>
+          <input type = "submit" value = "Submit" />
+          <input type = "reset" value = "Clear" />
+        </p>
+      </form>
+    </section>
+
+  </body>
+</html>
