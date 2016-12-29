@@ -9,6 +9,7 @@ namespace IS_1.Models
 {
     public class Message
     {
+        //can there be multiple keys?
         //[Key]
         [Required]
         public string Username { get; set; }
@@ -25,6 +26,10 @@ namespace IS_1.Models
                 Date = DateTime.Now;        //gives a LOCAL time
                 Text = text;
                 Username = username;
+            }
+            else
+            {
+                //error message
             }
         }
 

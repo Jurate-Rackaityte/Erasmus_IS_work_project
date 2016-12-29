@@ -19,12 +19,15 @@ namespace IS_1.Controllers
             _context = context;
         }
 
+        //creates the new text message
         [HttpPost]
-        public IActionResult Create(Message message)
+        public IActionResult Create(string text)
         {
+            Message message = new IS_1.Models.Message(text, GlobalVariables.CurrentUser);
             _context.Messages.Add(message);
             _context.SaveChanges();
-            //ATTENTION! the place to redirect might change
+            //ATTENTION! the place to redirect might change.
+            //we'll need to redirect the user into the chatroom page
             return RedirectToAction("Index");
         }
 
@@ -34,6 +37,8 @@ namespace IS_1.Controllers
         //aka "Read All" - to view a chat
         //To-Do: paziureti, ar tikrai visada automatiskai
         //       surusiuoja pagal laika ir ar tinkama tvarka
+        //translation (tl;dr): check if this will be ok and will it 
+        //              sort the messages according to their dates in the right order
         [HttpGet]
         public IActionResult Index()
         {

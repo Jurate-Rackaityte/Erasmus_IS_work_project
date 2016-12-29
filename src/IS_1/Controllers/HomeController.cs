@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
+//I honestly don't know if we'll need this. This page was generated automatically
 namespace IS_1.Controllers
 {
     public class HomeController : Controller

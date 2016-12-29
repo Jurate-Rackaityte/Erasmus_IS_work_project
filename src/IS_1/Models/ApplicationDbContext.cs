@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+//Our database. Ta-dam!
 namespace IS_1.Models
 {
     public class ApplicationDbContext : DbContext
