@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 namespace IS_1.Controllers
 {
+
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,13 +21,26 @@ namespace IS_1.Controllers
 
         //Register a new user. Aka create new user in the database
         [HttpPost]
-        public IActionResult Register(string username, string password)
+        public IActionResult Register(string username, string password1, string password2)
         {
-            User user = new IS_1.Models.User(username, password);
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            Boolean userCreated = false;
+            if (password1.Equals(password2))
+            {
+                User user = new IS_1.Models.User(username, password1);
+                User temp = _context.Users.FirstOrDefault(u => u.Username == username);
+                if (temp == null)
+                {
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                    userCreated = true;
+                }
+                //else
+                //    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "The username is already taken." + "');", true);
+            }
+            //else
+            //    MessageBox.Show("The passwords does not match!");
             //ATTENTION! the place to redirect might change
-            return RedirectToAction("Index");
+            return View(userCreated);
         }
 
         //looks if the password is correct.
