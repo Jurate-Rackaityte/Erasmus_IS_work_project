@@ -20,6 +20,7 @@ namespace IS_1.Controllers
         }
 
         //creates the new text message
+        // not idempotent
         [HttpPost]
         public IActionResult Create(string text)
         {
@@ -39,7 +40,14 @@ namespace IS_1.Controllers
         //       surusiuoja pagal laika ir ar tinkama tvarka
         //translation (tl;dr): check if this will be ok and will it 
         //              sort the messages according to their dates in the right order
+        // idempotent
         [HttpGet]
+        //veliau: atiduoti ne view, o json. Is android paskui atgal pasiimt json ir susiformatuoti. 
+        //tikriausiai atgal i array suformatuos 
+        //-------------------------------------
+        // Translation:
+        //To-DO: return not a view, but json. Later, when on android, take json and formate it into something appropriate
+        //it will probably formate it back into the array
         public IActionResult Index()
         {
             var model = _context.Messages.ToList();

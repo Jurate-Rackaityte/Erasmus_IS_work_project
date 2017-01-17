@@ -18,7 +18,7 @@ namespace IS_1.Controllers
         {
             _context = context;
         }
-
+        // not idempotent
         //Register a new user. Aka create new user in the database
         [HttpPost]
         public IActionResult Register(string username, string password1, string password2)
@@ -45,6 +45,7 @@ namespace IS_1.Controllers
 
         //looks if the password is correct.
         //return boolean
+        // idempotent
         [HttpGet]
         public IActionResult IsPasswordCorrect(string username, string password)
         {
@@ -62,6 +63,7 @@ namespace IS_1.Controllers
             //the log in page with an error message
             return View(correct);
         }
+        // idempotent
         [HttpGet]
         // GET: /<controller>/
         public IActionResult Index()
