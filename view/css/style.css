@@ -8,7 +8,6 @@ body{
 .wrapper{
   width:100%;
   margin:auto;
-  text-align:left;
 }
 
 header{
@@ -16,12 +15,16 @@ header{
   width:100%;
   height: 80px;
   padding:10px 0 10px 0;
-  background-color:#ddd;                   /* do something with this color! */  
+  background-color: #ffaa80;
+  text-align:center;  
 }
 
 header p{
   float:left;
   font-size: 24px;
+}
+header span{
+  font-family: "Harlow";
 }
 
 .logout{
@@ -33,10 +36,16 @@ header p{
   flex-flow:row-reverse wrap;
   clear:both;
   min-height:400px; 
+  background-color:#e6e6e6;
+}
+
+section{
+  text-align:center;
+  margin:1%;
+  background-color: #f3f3f3;
 }
 
 .login{
-  background-color: gray;
   width:auto;
   float: right;
   flex:1;
@@ -45,17 +54,15 @@ header p{
 .register{
   float: left;
   width:auto;
-  flex:1;
-  background-color: lightblue;  
+  flex:1;   
 }
 
 .register form{
   text-align:right;
   padding-right:20%;
 }
-section{
-  text-align:center;
-}
+
 footer{
   clear:both;
+  background-color: #ffaa80;
 }
