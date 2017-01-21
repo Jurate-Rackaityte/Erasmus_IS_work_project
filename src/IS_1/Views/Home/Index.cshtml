@@ -18,33 +18,41 @@
 <body>
     <div class="wrapper">
         <header>
-            <p class="welcome">Welcome to Chatton    </p>
+            <p>Welcome to <span>Chatton</span>    </p>
         </header>
-        <section>
-            <h2>
-                Login
-            </h2>
-            <form method="POST" action="">
-                <p><label>Username: <input name="username" type="text" placeholder="Username" required size="25"></label></p>
-                <p><label>Password: <input name="password" type="password" required size="25"></label></p>
-                <p><input type="submit" value="Login!" /></p>
-            </form>
-        </section>
-        <section>
-            <h2>
-                Register
-            </h2>
-            <p> It is fast and free. </p>
-            <form method="POST" action="">
-                <p><label>Username: <input name="username" type="text" placeholder="Username" required size="25"></label></p>
-                <p><label>Password: <input name="password" type="password" required size="25"></label></p>
-                <p><label>Confirm password: <input name="confirm_password" type="password" required size="25"></label></p>
-                <p>
-                    <input type="submit" value="Submit" />
-                    <input type="reset" value="Clear" />
-                </p>
-            </form>
-        </section>
+        <div class="main">
+            <section class="login">
+                <h2>
+                    Login
+                </h2>
+                @model IS_1.Models.User
+                <form method="POST" action="">
+                    <p><label>Username: <input name="Username" type="text" placeholder="Username" required size="25"></label></p>
+                    <p><label>Password: <input name="Password" type="password" required size="25"></label></p>
+                    <p><input type="submit" value="Login!" /></p>
+                </form>
+            </section>
+            <section class="register">
+                <h2>
+                    Register
+                </h2>
+                <p> It is fast and free. </p>
+                @model IS_1.Models.User
+                <form method="POST" action="">
+                    <p><label>Username: <input name="Username" type="text" placeholder="Username" required size="25"></label></p>
+                    <p><label>Password: <input name="Password" type="password" required size="25"></label></p>
+                    <p><label>Confirm password: <input name="confirm_password" type="password" required size="25"></label></p>
+                    <p>
+                        <input type="submit" value="Submit" />
+                        <input type="reset" value="Clear" />
+                    </p>
+                </form>
+            </section>
+        </div>
+        <footer>
+            © Jurate & Naty 2016/2017
+        </footer>
     </div>
 </body>
+
 </html>
