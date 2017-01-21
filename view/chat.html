@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="css/style.css" media="all">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div class="wrapper">
@@ -18,12 +18,13 @@
         <p class="logout"><a id="exit" href="index.html">Exit Chat</a></p>
       </header>
       
-      <div id="chatbox">
-        <form>
-          <input name="message" type="text" placeholder="Write your message here..." size="70">
-          <input type="submit" value="Send">
+      <div id="chatbox"></div>
+      
+        <form name="message" action="">
+          <input name="usermsg" type="text" id="usermsg" placeholder="Write your message here..." size="70">
+          <input name="submitmsg" type="submit" id="submitmsg" value="Send">
         </form>
-      </div>
+      
       
     </div>
   </body>
