@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IS_1.Controllers
 {
+	[Route("api/[controller]")]
     public class MessageController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 namespace IS_1.Controllers
 {
-
+	[Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
