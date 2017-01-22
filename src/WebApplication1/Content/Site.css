@@ -1,0 +1,124 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    max-width:1040px;
+    min-width:300px;
+}
+
+.wrapper{
+  width:100%;
+  margin:auto;
+}
+
+header{
+  float:left;
+  width:100%;
+  height: 80px;
+  padding:10px 0 10px 0;
+  background-color: #ffaa80;
+  text-align:center;  
+}
+
+header p{
+  float:left;
+  font-size: 24px;
+}
+header span{
+  font-family: "Harlow";
+}
+
+.logout{
+  float:right;
+}
+
+.main{
+  display:flex; 
+  flex-flow:row-reverse wrap;
+  clear:both;
+  min-height:400px; 
+  background-color:#e6e6e6;
+}
+
+section{
+  text-align:center;
+  margin:1%;
+  background-color: #f3f3f3;
+}
+
+.login{
+  width:auto;
+  float: right;
+  flex:1;
+}
+
+.register{
+  float: left;
+  width:auto;
+  flex:1;   
+}
+
+.register form{
+  text-align:right;
+  padding-right:20%;
+}
+
+footer{
+  clear:both;
+  background-color: #ffaa80;
+}
+
+#chatbox {
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:25px;
+    padding:10px;
+    background:#fff;
+    height:270px;
+    width:430px;
+    border:1px solid #ACD8F0;
+    overflow:auto; }
+#usermsg {
+    width:395px;
+    border:1px solid #ACD8F0; }
+  
+#submit { width: 60px; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+

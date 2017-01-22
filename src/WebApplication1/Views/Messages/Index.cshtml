@@ -1,0 +1,44 @@
+@model IEnumerable<WebApplication1.Models.Message>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+    <meta charset="utf-8">
+    <title>Chatton</title>
+
+    <meta name="author" content="" lang="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="Shared/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header asp-action="Exit">
+            <p class="welcome">Welcome<b></b></p>
+            <p class="logout"><a id="exit" href="users/index.html">Exit Chat</a></p>
+        </header>
+
+        <div id="chatbox">
+            <p>Chat is here, I swear it! (for debugging purposes)</p>
+            @foreach (var m in Model)
+            {
+                <p>
+                    @Html.DisplayFor(modelItem => m.Username)
+                    : 
+                    @Html.DisplayFor(modelItem => m.Text)
+                </p>
+            }
+        </div>
+
+        <form name="Message" asp-action="Create" asp-controller="Messages">
+            <input name="Text" type="text" id="usermsg" placeholder="Write your message here..." size="70">
+            <input name="Create" type="submit" id="submitmsg" value="Send">
+        </form>
+
+
+    </div>
+</body>
