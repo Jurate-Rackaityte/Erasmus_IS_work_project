@@ -71,8 +71,9 @@ namespace WebApplication1
                     name: "api",
                     template: "{controller}/{id?}");
             });
-            app.UseStaticFiles();
+            
             DbInitializer.Initialize(context);
+            app.UseStaticFiles();
         }
     }
 }

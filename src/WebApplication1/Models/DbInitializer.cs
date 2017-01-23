@@ -13,27 +13,36 @@ namespace WebApplication1.Models
         public static void Initialize(Models.ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
-            // Look for any users
-            if (context.Users.Any())
-            {
-                return;     // DB has been seeded
-            }
 
-            var users = new User[]
-            {
-                new User("HelloWorld", "NoAdminRuleRules"),
-                new User("test", "test123"),
-                new User("meow", "woofwoof")
-            };
-            foreach (User u in users)
-            {
-                context.Users.Add(u);
-            }
-            context.SaveChanges();
-
+            if (context.Messages.Any())
+                return;
             var messages = new Message("Hello World! Welcome to Chatton.", "HelloWorld");
             context.Messages.Add(messages);
             context.SaveChanges();
+
+            // Look for any users
+            if (context.Users.Any())
+            {
+                Console.WriteLine("CHIKI BRIKI");
+                return;     // DB has been seeded
+            }
+            else
+            {
+                 var users = new User[]
+                {
+                    new User("HelloWorld", "Hello"),
+                    new User("test", "test123"),
+                    new User("meow", "woofwoof")
+                };
+                foreach (User u in users)
+                {
+                    context.Users.Add(u);
+                }
+                context.SaveChanges();
+                Console.WriteLine("TURIM VARTOTOJU");
+            }
+
+            
         }
     }
 }
