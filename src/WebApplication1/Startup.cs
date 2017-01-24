@@ -43,6 +43,10 @@ namespace WebApplication1
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
+            services.AddMvc().AddJsonOptions(jsonOptions =>
+             {
+                 jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -67,9 +71,9 @@ namespace WebApplication1
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Users", action = "Index" });
                     //template: "{controller=Home}/{action=Index}/{id?}"
-                routes.MapRoute(
-                    name: "api",
-                    template: "{controller}/{id?}");
+                //routes.MapRoute(
+                //    name: "api",
+                //    template: "{controller}/{id?}");
             });
             
             DbInitializer.Initialize(context);

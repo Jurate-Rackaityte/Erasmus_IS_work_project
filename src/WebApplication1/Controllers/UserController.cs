@@ -22,10 +22,11 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Users
-        [HttpGet("Index/{id}")]
+        [HttpGet("Index")]
         public IActionResult Index()
         {
-            return View();
+            
+            return View(_context.Users);
         }
 
 
@@ -54,73 +55,94 @@ namespace WebApplication1.Controllers
         // not idempotent
         //Register a new user. Aka create new user in the database
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string Username, string Password1, string Password2)
+        // [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Dictionary<string,string> d)
+        //public IActionResult Create([Bind("Username,Password1, Password2")] Register r)
         {
-            //Boolean userCreated = false;
-            if (Password1.Equals(Password2) && !Password1.Equals(""))   // if passwords match and is not null
+            string user, p1, p2;
+            d.TryGetValue("Username", out user);
+            d.TryGetValue("Password1", out p1);
+            d.TryGetValue("Password2", out p2);
+            //return Ok(user + " "+ p1 + " " + p2);
+            if (p1.Equals(p2) && !p1.Equals(""))   // if passwords match and is not null
             {
-                User user = new WebApplication1.Models.User(Username, Password1);
-                User temp = _context.Users.FirstOrDefault(u => u.Username == Username);
-                try { 
-                    if (temp == null && ModelState.IsValid)
-                    {
-                        _context.Add(user);
-                        await _context.SaveChangesAsync();
-                        GlobalVariables.Users.Add(user);
-                        Console.WriteLine("AS CIA!!!");
+                
+                User tempUser = new WebApplication1.Models.User(user, p1);
+                //User temp = _context.Users.First(u => u.Username == user);
+                
+                try
+                {
+                    //if (temp != null)
+                    //{
+                       // ModelState.AddModelError("", "Username is not unique. " +
+                       // "Try again with another username. ");
+                   // }
+                   // else
+                   // {
+                        //return Ok("!!!Pralindau pro kontrole!!!");
+                    _context.Add(tempUser);
+                    await _context.SaveChangesAsync();
+                    //GlobalVariables.Users.Add(tempUser);
+                    //return Ok("Uzregistravau!");
                         //userCreated = true;
-                    }
+                  //  }
                 }
                 catch (DbUpdateException /* ex */)
                 {
                     //Log the error (uncomment ex variable name and write a log.
-                    ModelState.AddModelError("", "Unable to save changes. " +
-                        "Try again, and if the problem persists " +
-                        "see your system administrator.");
+                    ModelState.AddModelError("", "Username is not unique. " +
+                        "Try again with another username. ");
                 }
-            //else
-            //    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "The username is already taken." + "');", true);
-        }
+                //else
+                //    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "The username is already taken." + "');", true);
+            }
             //else
             //    MessageBox.Show("The passwords does not match!");
             //ATTENTION! the place to redirect might change
-            return RedirectToAction("Index");
+            return
+            //Ok("ALEHANDER");
+            RedirectToAction("Index");
+            //Redirect(Request.QueryString["r"]);
         }
-        //[Route("action")]
-        [HttpGet("{id:int}")]
-        public IActionResult Login([Bind("Username,Password")] User user)
+        [Route("login")]
+        [HttpPost]
+        public IActionResult Login(Dictionary<string, string> r)
         {
             //Boolean correct = false;
-            User temp = _context.Users.FirstOrDefault(u => u.Username == user.Username);
-            try { 
-                if (temp != null && temp.Password == user.Password)
+            string user, p;
+            r.TryGetValue("Username", out user);
+            r.TryGetValue("Password", out p);
+            User temp = _context.Users.FirstOrDefault(u => u.Username == user);
+            //return Ok(temp.Username + "\n"+temp.Password+"\n"+p);
+            //try { 
+                if (!temp.Username.Equals("") && temp.Password == p)
                 {
                     //correct = true;
-                    GlobalVariables.CurrentUser = user.Username;
-                    return RedirectToAction("Login");
+                    GlobalVariables.CurrentUser = user;
+                    //return Ok("Prisijungiau!");
+                    return RedirectToAction("index", "message", "api/message/index/");
                 }
-                if (GlobalVariables.Users.Exists(u => u.Username == user.Username &&
-                u.Password == user.Password))
-                {
-                    //correct = true;
-                    GlobalVariables.CurrentUser = user.Username;
-                    return RedirectToAction("Login");
-                }
-             }
-            catch (DbUpdateException /* ex */)
-            {
-                //Log the error (uncomment ex variable name and write a log.
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
-            }
+            // }
+            //catch (DbUpdateException /* ex */)
+            //{
+            //    //Log the error (uncomment ex variable name and write a log.
+            //    ModelState.AddModelError("", "Unable to save changes. " +
+            //        "Try again, and if the problem persists " +
+            //        "see your system administrator.");
+            //}
             //later we'll need to change this into a redirection.
             //so that if everything is allright, then we'll redirect
             //the user into the chatroom. 
             //If something's wrong, we'll redirect the user again to 
             //the log in page with an error message
             // later: redirect to messages
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Exit()
+        {
+            GlobalVariables.CurrentUser = "";
             return RedirectToAction("Index");
         }
 

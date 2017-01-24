@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Messages
-        [HttpGet("Index/{id}")]
+        [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Messages.ToListAsync());
@@ -60,21 +60,20 @@ namespace WebApplication1.Controllers
 
         //creates the new text message
         // not idempotent
+        [Route("create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string Text)
+        public async Task<IActionResult> Create(Dictionary<string, string> t)
         {
-            Message message = new WebApplication1.Models.Message(Text, GlobalVariables.CurrentUser);
+            string temp;
+            t.TryGetValue("Text", out temp);
+            Message message = new WebApplication1.Models.Message(temp, GlobalVariables.CurrentUser);
+            return Ok("Pagavau ;)");
            try { 
-            // if (ModelState.IsValid)
-            //{
                 _context.Messages.Add(message);
                 await _context.SaveChangesAsync();
-                GlobalVariables.Messages.Add(message);
-                Console.WriteLine("HA, PARASIAU, NA IR KAS DABAR???");
-                Console.WriteLine(GlobalVariables.CurrentUser);
-            // }
-             }
+                //GlobalVariables.Messages.Add(message);
+            }
             catch (DbUpdateException /* ex */)
             {
                 //Log the error (uncomment ex variable name and write a log.
@@ -84,8 +83,41 @@ namespace WebApplication1.Controllers
             }
             //ATTENTION! the place to redirect might change.
             //we'll need to redirect the user into the chatroom page
-            return View(_context.Messages);
+
+            //later: redirect to update + update function
+            return RedirectToAction("index", "message", "api/message/index/");
         }
+
+        //[HttpGet]
+        //public IActionResult Login([FromBody][Bind("Username,Password")] User user)
+        //{
+        //    //Boolean correct = false;
+        //    User temp = _context.Users.FirstOrDefault(u => u.Username == user.Username);
+        //    try
+        //    {
+        //        if (temp != null && temp.Password == user.Password)
+        //        {
+        //            //correct = true;
+        //            GlobalVariables.CurrentUser = user.Username;
+        //            return RedirectToAction("Index");
+        //        }
+                
+        //    }
+        //    catch (DbUpdateException /* ex */)
+        //    {
+        //        //Log the error (uncomment ex variable name and write a log.
+        //        ModelState.AddModelError("", "Unable to save changes. " +
+        //            "Try again, and if the problem persists " +
+        //            "see your system administrator.");
+        //    }
+        //    //later we'll need to change this into a redirection.
+        //    //so that if everything is allright, then we'll redirect
+        //    //the user into the chatroom. 
+        //    //If something's wrong, we'll redirect the user again to 
+        //    //the log in page with an error message
+        //    // later: redirect to messages
+        //    return RedirectToAction("Message/Index");
+        //}
 
         //// POST: Messages/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 

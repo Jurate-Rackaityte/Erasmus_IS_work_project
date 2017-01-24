@@ -13,91 +13,97 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
- //   <link rel="stylesheet" href="Shared/style.css" media="all">
+
     <style>
-        body{
-  margin: 0 auto;
-  max-width:1040px;
-  min-width:300px;
-}
+        body {
+            margin: 0 auto;
+            max-width: 1040px;
+            min-width: 300px;
+        }
 
-.wrapper{
-  width:100%;
-  margin:auto;
-}
+        .wrapper {
+            width: 100%;
+            margin: auto;
+        }
 
-header{
-  float:left;
-  width:100%;
-  height: 80px;
-  padding:10px 0 10px 0;
-  background-color: #ffaa80;
-  text-align:center;  
-}
-header p{
-  float:left;
-  font-size: 24px;
-}
-header span{
-  font-family: "Harlow";
-}
+        header {
+            float: left;
+            width: 100%;
+            height: 80px;
+            padding: 10px 0 10px 0;
+            background-color: #ffaa80;
+            text-align: center;
+        }
 
-.logout{
-  float:right;
-}
+        header p {
+            float: left;
+            font-size: 24px;
+        }
 
-.main{
-  display:flex; 
-  flex-flow:row-reverse wrap;
-  clear:both;
-  min-height:400px; 
-  background-color:#e6e6e6;
-}
+        header span {
+            font-family: "Harlow";
+        }
 
-section{
-  text-align:center;
-  margin:1%;
-  background-color: #f3f3f3;
-}
+        .logout {
+            float: right;
+        }
 
-.login{
-  width:auto;
-  float: right;
-  flex:1;
-}
+        .main {
+            display: flex;
+            flex-flow: row-reverse wrap;
+            clear: both;
+            min-height: 400px;
+            background-color: #e6e6e6;
+        }
 
-.register{
-  float: left;
-  width:auto;
-  flex:1;   
-}
+        section {
+            text-align: center;
+            margin: 1%;
+            background-color: #f3f3f3;
+        }
 
-.register form{
-  text-align:right;
-  padding-right:20%;
-}
+        .login {
+            width: auto;
+            float: right;
+            flex: 1;
+        }
 
-footer{
-  clear:both;
-  background-color: #ffaa80;
-}
+        .register {
+            float: left;
+            width: auto;
+            flex: 1;
+        }
 
-#chatbox {
-    text-align:left;
-    margin:0 auto;
-    margin-bottom:25px;
-    padding:10px;
-    background:#fff;
-    height:270px;
-    width:430px;
-    border:1px solid #ACD8F0;
-    overflow:auto; }
-#usermsg {
-    width:395px;
-    border:1px solid #ACD8F0; }
-  
-#submit { width: 60px; }
+        .register form {
+            text-align: right;
+            padding-right: 20%;
+        }
+
+        footer {
+            clear: both;
+            background-color: #ffaa80;
+        }
+
+     #chatbox {
+            text-align: left;
+            margin: 0 auto;
+            margin-bottom: 25px;
+            padding: 10px;
+            background: #fff;
+            height: 270px;
+            width: 430px;
+            border: 1px solid #ACD8F0;
+            overflow: auto;
+        }
+
+        #usermsg {
+            width: 395px;
+            border: 1px solid #ACD8F0;
+        }
+
+        #submit {
+            width: 60px;
+        }
     </style>
 </head>
 
@@ -111,42 +117,63 @@ footer{
                 <h2>
                     Login
                 </h2>
-                <form method="POST" asp-action="Login">
-                    <p><label>Username: <input asp-for="username" type="text" placeholder="Username" required size="25"></label></p>
-                    <p><label>Password: <input asp-for="password" type="password" required size="25"></label></p>
+                <form method="post" asp-action="Login" asp-controller="User" action="../login/">
+                    <p><label>Username: <input name="Username" asp-for="username" type="text" placeholder="Username" required size="25"></label></p>
+                    <p><label>Password: <input name="Password" asp-for="password" type="password" required size="25"></label></p>
                     <p><input type="submit" value="Login!" /></p>
                 </form>
             </section>
+            <!--
+                <section class="register">
+                <h2><a href="Create.cshtml">
+                    Register
+                    </a>
+                </h2>
+            </section>
+            -->
+            
             <section class="register">
                 <h2>
                     Register
                 </h2>
                 <p> It is fast and free. Warning: password security is very low, so we recommend using an easy password.</p>
-                <form method="POST" asp-action="Create">
+                
+                <form method="post" action="../">
                     <div>
                         <div>
-                            <p><label>Username: <input asp-for="Username" type="text" placeholder="Username" required size="25"></label></p>
+                            <p><label>Username: <input name="Username" asp-for="Username" type="text" placeholder="Username" required size="25"></label></p>
                             <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
                         <div>
-                            <p><label>Password: <input asp-for="Password1" type="password" required size="25"></label></p>
+                            <p><label>Password: <input name="Password1" asp-for="Password1" type="password" required size="25"></label></p>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div>
-                            <p><label>Confirm password: <input asp-for="Password2" type="password" required size="25"></label></p>
+                            <p><label>Confirm password: <input name="Password2" asp-for="Password2" type="password" required size="25"></label></p>
                         </div>
-                       <!-- <p> --> 
-                            <input type="submit" value="Register" />
-                            <!-- <input type="reset" value="Clear" /> -->
-                       <!-- </p> --> 
-                    </div> 
-                    
+                        
+                        <!-- <p> -->
+                        <input type="submit" value="Register" />
+                        <!-- <input type="reset" value="Clear" /> -->
+                        <!-- </p> -->
+                    </div>
+
                 </form>
             </section>
         </div>
         <footer>
              Jurate & Naty 2016/2017
         </footer>
+        @foreach(var m in Model)
+        {
+            <p>
+                @Html.DisplayFor(modelItem => m.Username)
+                -->      
+                @Html.DisplayFor(modelItem => m.Password)
+            </p>
+
+        }
+
     </div>
 </body>
 <!-- </html> -->
