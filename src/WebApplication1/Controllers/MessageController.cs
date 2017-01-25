@@ -63,14 +63,13 @@ namespace WebApplication1.Controllers
         // not idempotent
         [Route("create")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Dictionary<string, string> t)
         {
-            // vis dar nepagauna
             string temp;
             t.TryGetValue("Text", out temp);
             Message message = new WebApplication1.Models.Message(temp, GlobalVariables.CurrentUser);
-            return Ok("Pagavau ;)");
+            
            try { 
                 _context.Messages.Add(message);
                 await _context.SaveChangesAsync();
@@ -94,7 +93,8 @@ namespace WebApplication1.Controllers
         public IActionResult Update()
         {
             // cia galim dirbti toliau
-            return Ok("Miau");
+            // ar tai tikrai taip ir veiks???
+            return RedirectToAction("index", "message", "api/message/index/");
         }
 
         //[HttpGet]

@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <head>
     <meta charset="utf-8">
     <title>Chatton</title>
@@ -34,7 +33,7 @@
                 </h2>
                 <form method="post" asp-action="Login" asp-controller="User" action="../login/">
                     <p><label>Username: <input name="Username" asp-for="username" type="text" placeholder="Username" required size="25"></label></p>
-                    <p><label>Password: <input name="Password" asp-for="password" type="password" required size="25"></label></p>
+                    <p><label>Password: <input name="Password" asp-for="password" type="password" placeholder="Password" required size="25"></label></p>
                     <p><input type="submit" value="Login!" /></p>
                 </form>
             </section>
@@ -60,11 +59,11 @@
                             <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
                         <div>
-                            <p><label>Password: <input name="Password1" asp-for="Password1" type="password" required size="25"></label></p>
+                            <p><label>Password: <input name="Password1" asp-for="Password1" type="password" required size="25" placeholder="Password"></label></p>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div>
-                            <p><label>Confirm password: <input name="Password2" asp-for="Password2" type="password" required size="25"></label></p>
+                            <p><label>Confirm password: <input name="Password2" asp-for="Password2" type="password" required size="25" placeholder="Password"></label></p>
                         </div>
                         
                         <!-- <p> -->
@@ -79,15 +78,6 @@
         <footer>
              Jurate & Naty 2016/2017
         </footer>
-        @foreach(var m in Model)
-        {
-            <p>
-                @Html.DisplayFor(modelItem => m.Username)
-                -->      
-                @Html.DisplayFor(modelItem => m.Password)
-            </p>
-
-        }
 
     </div>
 </body>

@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+       <style>
         header,section{text-align:center}#chatbox,#usermsg{border:1px solid #a6a6a6}body{margin:0 auto;max-width:1040px;min-width:300px}
         .wrapper{width:100%;margin:auto}header{float:left;width:100%;height:80px;padding:10px 0;background-color:#ffaa80}header p{float:left;font-size:24px}
         .login,.logout{float:right}.main{display:flex;flex-flow:row-reverse wrap;clear:both;min-height:400px;background-color:#e6e6e6}section{margin:1%;background-color:#f3f3f3}
@@ -35,8 +35,7 @@
             <!-- if we decide to work with 1 controller, than this one will be a solution -->
             <!-- Html.ActionLink("Back to previous page", null, null, null, new { href = "user/index" }); -->
         </header>
-        <div class="main">
-        <section class="chat">
+
         <div id="chatbox" asp-action="Index" asp-validation-summary="ModelOnly">
             @foreach (var m in Model)
             {
@@ -48,20 +47,13 @@
             }
         </div>
 
-        <form name="Message" asp-action="Create" asp-controller="Message" asp-validation-summary="ModelOnly" action="../message/create/">
-            <input name="Text" asp-for="Text" type="text" id="usermsg" placeholder="Write your message here..." size="70">
-            <input name="Create" type="submit" id="submitmsg" value="Send">
+        <form method="post"  action="../message/create/">
+            <p><input name="Text" asp-for="text" type="text" id="usermsg" placeholder="Write your message here..." size="70"></p>
+            <p><input type="submit" value="Send"></p>
         </form>
         <form name="Update" asp-action="Update" action="../message/update/">
             <input name="Update" type="submit" id="submitmsg" value="Refresh">
         </form>
-        </section>
-        </div>
-        <footer>
-            © Jurate & Naty 2016/2017
-        </footer>
     </div>
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+
 </body>

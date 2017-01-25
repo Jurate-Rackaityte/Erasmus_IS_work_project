@@ -3,9 +3,9 @@
     Next: let's try to exclude the database and THEN try it again.
     Both with this window and without it
 *@
-@model IEnumerable<WebApplication1.Models.User>
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Exit";
 }
 <!-- <p><a href="messages/index.html">Successfully logged in!</p> -->
 <head>
@@ -33,29 +33,9 @@
         </header>
         <div class="main">
             <section class="register">
-                <h2>
-                    Register
-                </h2>
-                <p> It is fast and free. Warning: password security is very low, so we recommend using an easy password.</p>
-                <form method="POST" asp-action="Create">
-                    <div>
-                        <div>
-                            <p><label>Username: <input asp-for="Username" type="text" placeholder="Username" required size="25"></label></p>
-                            <span asp-validation-for="Username" class="text-danger"></span>
-                        </div>
-                        <div>
-                            <p><label>Password: <input asp-for="Password1" type="password" required size="25"></label></p>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div>
-                            <p><label>Confirm password: <input asp-for="Password2" type="password" required size="25"></label></p>
-                        </div>
-                        <!-- <p> -->
-                        <input type="submit" value="Register" />
-                        <!-- <input type="reset" value="Clear" /> -->
-                        <!-- </p> -->
-                    </div>
-
+                <form method="post" asp-action="Exit" name="Exit" action="../message/exit/">
+                    <p>The Username or password was wrong. Try again.</p>
+                    <input name="Exit" type="submit" id="submitmsg" value="Get back">
                 </form>
             </section>
             <p>
