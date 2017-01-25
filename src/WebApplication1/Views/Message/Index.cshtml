@@ -13,97 +13,13 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <style>
-        body {
-            margin: 0 auto;
-            max-width: 1040px;
-            min-width: 300px;
-        }
-
-        .wrapper {
-            width: 100%;
-            margin: auto;
-        }
-
-        header {
-            float: left;
-            width: 100%;
-            height: 80px;
-            padding: 10px 0 10px 0;
-            background-color: #ffaa80;
-            text-align: center;
-        }
-
-        header p {
-            float: left;
-            font-size: 24px;
-        }
-
-        header span {
-            font-family: "Harlow";
-        }
-
-        .logout {
-            float: right;
-        }
-
-        .main {
-            display: flex;
-            flex-flow: row-reverse wrap;
-            clear: both;
-            min-height: 400px;
-            background-color: #e6e6e6;
-        }
-
-        section {
-            text-align: center;
-            margin: 1%;
-            background-color: #f3f3f3;
-        }
-
-        .login {
-            width: auto;
-            float: right;
-            flex: 1;
-        }
-
-        .register {
-            float: left;
-            width: auto;
-            flex: 1;
-        }
-
-        .register form {
-            text-align: right;
-            padding-right: 20%;
-        }
-
-        footer {
-            clear: both;
-            background-color: #ffaa80;
-        }
-
-     #chatbox {
-            text-align: left;
-            margin: 0 auto;
-            margin-bottom: 25px;
-            padding: 10px;
-            background: #fff;
-            height: 270px;
-            width: 430px;
-            border: 1px solid #ACD8F0;
-            overflow: auto;
-        }
-
-        #usermsg {
-            width: 395px;
-            border: 1px solid #ACD8F0;
-        }
-
-        #submit {
-            width: 60px;
-        }
-    </style>
+    <style>
+        header,section{text-align:center}#chatbox,#usermsg{border:1px solid #a6a6a6}body{margin:0 auto;max-width:1040px;min-width:300px}
+        .wrapper{width:100%;margin:auto}header{float:left;width:100%;height:80px;padding:10px 0;background-color:#ffaa80}header p{float:left;font-size:24px}
+        .login,.logout{float:right}.main{display:flex;flex-flow:row-reverse wrap;clear:both;min-height:400px;background-color:#e6e6e6}section{margin:1%;background-color:#f3f3f3}
+        .login{width:auto;flex:1}.chat,.register{float:left;width:auto}.register{flex:1}.register form{text-align:right;padding-right:20%}.chat{margin:1% 20%}footer{clear:both;background-color:#ffaa80}
+        #chatbox{text-align:left;margin:1% 1% 25px;padding:10px;background:#fff;height:300px;width:auto;overflow:auto}#usermsg{width:90%}#submit{width:60px}
+    </style>      
 </head>
 <body>
     <div class="wrapper">
@@ -114,24 +30,28 @@
             </a>
             @Html.ActionLink("Back to previous page", null, null, null, new { href = "User/Index" });
         </header>
+        <div class="main">
+        <section class="chat">
+            <div id="chatbox" asp-action="Index" asp-validation-summary="ModelOnly">
+                @foreach (var m in Model)
+                {
+                    <p>
+                        @Html.DisplayFor(modelItem => m.Username)
+                        : 
+                        @Html.DisplayFor(modelItem => m.Text)
+                    </p>
+                }
+            </div>
 
-        <div id="chatbox" asp-action="Index" asp-validation-summary="ModelOnly">
-            @foreach (var m in Model)
-            {
-                <p>
-                    @Html.DisplayFor(modelItem => m.Username)
-                    : 
-                    @Html.DisplayFor(modelItem => m.Text)
-                </p>
-            }
+            <form name="Message" asp-action="Create" asp-controller="Messages" asp-validation-summary="ModelOnly" action="../create/">
+                <input name="Text" asp-for="Text" type="text" id="usermsg" placeholder="Write your message here..." size="70">
+                <input name="Create" type="submit" id="submitmsg" value="Send">
+            </form>
+        </section>
         </div>
-
-        <form name="Message" asp-action="Create" asp-controller="Messages" asp-validation-summary="ModelOnly" action="../create/">
-            <input name="Text" asp-for="Text" type="text" id="usermsg" placeholder="Write your message here..." size="70">
-            <input name="Create" type="submit" id="submitmsg" value="Send">
-        </form>
-
-
+        <footer>
+            © Jurate & Naty 2016/2017
+        </footer>
     </div>
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
