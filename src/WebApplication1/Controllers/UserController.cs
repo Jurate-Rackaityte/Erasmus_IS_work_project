@@ -139,12 +139,12 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Exit()
-        {
-            GlobalVariables.CurrentUser = "";
-            return RedirectToAction("Index");
-        }
+        //[HttpGet]
+        //public IActionResult Exit()
+        //{
+        //    GlobalVariables.CurrentUser = "";
+        //    return RedirectToAction("Index");
+        //}
 
 
         //// GET: Users/Details/5

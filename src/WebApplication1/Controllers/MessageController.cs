@@ -28,11 +28,12 @@ namespace WebApplication1.Controllers
             return View(await _context.Messages.ToListAsync());
         }
 
-        //[HttpGet]
-        //public IActionResult Exit()
-        //{
-        //    return RedirectToAction("Users/Index/");
-        //}
+        [HttpGet("exit")]
+        public IActionResult Exit()
+        {
+            GlobalVariables.CurrentUser = "";
+            return RedirectToAction("index", "user", "api/user/index/");
+        }
 
         //// GET: Messages/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -65,6 +66,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Dictionary<string, string> t)
         {
+            // vis dar nepagauna
             string temp;
             t.TryGetValue("Text", out temp);
             Message message = new WebApplication1.Models.Message(temp, GlobalVariables.CurrentUser);
@@ -86,6 +88,13 @@ namespace WebApplication1.Controllers
 
             //later: redirect to update + update function
             return RedirectToAction("index", "message", "api/message/index/");
+        }
+
+        [HttpGet("update")]
+        public IActionResult Update()
+        {
+            // cia galim dirbti toliau
+            return Ok("Miau");
         }
 
         //[HttpGet]
