@@ -30,30 +30,35 @@
                 <input name="Exit" type="submit" id="submitmsg" value="Exit">
             </form>
             <!-- <a class="logout" href="User/Index.cshtml"> -->
-            
             <!-- </a> -->
             <!-- if we decide to work with 1 controller, than this one will be a solution -->
             <!-- Html.ActionLink("Back to previous page", null, null, null, new { href = "user/index" }); -->
         </header>
-
+        <div class="main">
+        <section class="chat">
         <div id="chatbox" asp-action="Index" asp-validation-summary="ModelOnly">
-            @foreach (var m in Model)
+                    @foreach (var m in Model)
             {
-                <p>
-                    @Html.DisplayFor(modelItem => m.Username)
-                    : 
-                    @Html.DisplayFor(modelItem => m.Text)
-                </p>
-            }
-        </div>
+                        <p>
+                            @Html.DisplayFor(modelItem => m.Username)
+                            :
+                            @Html.DisplayFor(modelItem => m.Text)
+                        </p>
+                    }
+                </div>
 
-        <form method="post"  action="../message/create/">
-            <p><input name="Text" asp-for="text" type="text" id="usermsg" placeholder="Write your message here..." size="70"></p>
-            <p><input type="submit" value="Send"></p>
-        </form>
-        <form name="Update" asp-action="Update" action="../message/update/">
-            <input name="Update" type="submit" id="submitmsg" value="Refresh">
-        </form>
-    </div>
+                <form method="post" action="../message/create/">
+                    <p><input name="Text" asp-for="text" type="text" id="usermsg" placeholder="Write your message here..." size="70"></p>
+                    <p><input type="submit" value="Send"></p>
+                </form>
+                <form name="Update" asp-action="Update" action="../message/update/">
+                    <input name="Update" type="submit" id="submitmsg" value="Refresh">
+                </form>
+            </section>
+            </div>
+        <footer>
+             Jurate & Naty 2016/2017
+        </footer>
+        </div>
 
 </body>
