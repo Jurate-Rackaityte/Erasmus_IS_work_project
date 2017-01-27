@@ -21,15 +21,20 @@ namespace WebApplication1.Controllers
             _context = context;    
         }
 
-        [Route("")]
-        [Route("user")]
-        [Route("user/index")]
         // GET: Users
-        [HttpGet("Index", Name ="Home")]
+        [HttpGet("Index")]
         public IActionResult Index()
         {
-            return View();
+            
+            return View(_context.Users);
         }
+
+
+        //// GET: Users/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
         //// POST: Users/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -49,10 +54,9 @@ namespace WebApplication1.Controllers
 
         // not idempotent
         //Register a new user. Aka create new user in the database
-        [Route("user/create")]
         [HttpPost]
         // [ValidateAntiForgeryToken]
-        public IActionResult Create(Dictionary<string,string> d)
+        public async Task<IActionResult> Create(Dictionary<string,string> d)
         //public IActionResult Create([Bind("Username,Password1, Password2")] Register r)
         {
             string user, p1, p2;
@@ -77,7 +81,7 @@ namespace WebApplication1.Controllers
                    // {
                         //return Ok("!!!Pralindau pro kontrole!!!");
                     _context.Add(tempUser);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     //GlobalVariables.Users.Add(tempUser);
                     //return Ok("Uzregistravau!");
                         //userCreated = true;
@@ -97,30 +101,9 @@ namespace WebApplication1.Controllers
             //ATTENTION! the place to redirect might change
             return
             //Ok("ALEHANDER");
-            RedirectToAction("index", "user", "api/user/index/");
+            RedirectToAction("Index");
             //Redirect(Request.QueryString["r"]);
         }
-
-        //FOR ANDROID. Same as Login, BUT if the username and/or password was wrong, than it return the empty string
-        [Route("user/login")]           //   api/user/login   ??
-        [HttpPost]
-        public JsonResult AndroidLogin(Dictionary<string, string> r)
-        {
-            string user, p;
-            r.TryGetValue("Username", out user);
-            r.TryGetValue("Password", out p);
-            User temp = _context.Users.FirstOrDefault(u => u.Username == user);
-
-            if (!temp.Username.Equals("") && temp.Password == p)
-            {
-                //correct = true;
-                GlobalVariables.CurrentUser = user;
-                //return Ok("Prisijungiau!");
-                return Json(user);
-            }
-            return Json("");
-        }
-
         [Route("login")]
         [HttpPost]
         public IActionResult Login(Dictionary<string, string> r)
@@ -142,10 +125,16 @@ namespace WebApplication1.Controllers
             // }
             //catch (DbUpdateException /* ex */)
             //{
-        //    //Log the error (uncomment ex variable name and write a log.
-        //    ModelState.AddModelError("error_login", "Login username or password " +
-        //        "is wrong. Try again. ");
-        ////}
+            ////Log the error (uncomment ex variable name and write a log.
+            //ModelState.AddModelError("", "Login username or password " +
+            //    "is wrong. Try again. ");
+            //}
+            //later we'll need to change this into a redirection.
+            //so that if everything is allright, then we'll redirect
+            //the user into the chatroom. 
+            //If something's wrong, we'll redirect the user again to 
+            //the log in page with an error message
+            // later: redirect to messages
             return RedirectToAction("index", "user", "api/user/index/");
         }
 

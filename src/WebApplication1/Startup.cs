@@ -20,8 +20,7 @@ namespace WebApplication1
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsEnvironment("Development"))
             {
@@ -79,7 +78,6 @@ namespace WebApplication1
             
             DbInitializer.Initialize(context);
             app.UseStaticFiles();
-            app.UseDeveloperExceptionPage();
         }
     }
 }
