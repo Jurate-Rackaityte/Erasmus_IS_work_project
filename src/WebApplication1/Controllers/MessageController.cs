@@ -8,6 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Net;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Net.Http.Headers;
+using System.Runtime.Serialization.Json;
 
 namespace WebApplication1.Controllers
 {
@@ -21,43 +28,85 @@ namespace WebApplication1.Controllers
             _context = context;    
         }
 
+        //FOR ANDROID. Same as Index & Update ???
+        [HttpGet("Android")]            //  api/Message/Android
+        public JsonResult Chatroom()
+        {
+            return Json(_context.Messages.ToList());
+        }
+
         // GET: Messages
-        [HttpGet("Index")]
+        [HttpGet("Index", Name ="Chatroom")]
         public async Task<IActionResult> Index()
         {
+            //var json = JsonConvert.SerializeObject(await _context.Messages.ToListAsync());
+            //return View(await _context.Messages.ToListAsync());
+            //return View(Json(await _context.Messages.ToListAsync()));
+            //Message m = new Message("labas", GlobalVariables.CurrentUser);
+
+            //            var req = WebRequest.Create(@"http://localhost:13082/api/Message/Index/");  
+            //            var r = await req.GetResponseAsync().ConfigureAwait(false);
+            //return Ok("zingsnis baigtas");
+            //            var responseReader = new StreamReader(r.GetResponseStream());
+            //            var responseData = await responseReader.ReadToEndAsync();
+
+            //            var d = Newtonsoft.Json.JsonConvert.DeserializeObject<Message>(responseData);
+            //            return View(d);
+
+            //var jsonInString = JsonConvert.SerializeObject(_context.Messages);
+            //var client = new HttpClient();
+            //client.GetAsync();
+            //var client = new HttpClient();
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //client.BaseAddress = new Uri("http://localhost:13082");
+            //client.PostAsJsonAsync("api/Message/Index", _context.Messages.ToListAsync);
+            //.ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode() );
+            //client.PostAsJsonAsync<Message>();
+            //return View("Index", Json(await _context.Messages.ToListAsync())); --> gives error because controller sends JsonResult while View is waiting for Generic.List
+            //List<Message> m = await _context.Messages.ToListAsync();
+            //List<Message> m2 = null;
+            //var client = new HttpClient
+            //{
+            //    BaseAddress = new Uri("http://localhost:13082/api/Message/Index")
+            //};
+            //var response = await client.GetAsync("");
+            //var stream = await response.Content.ReadAsStreamAsync();
+            //var serializer = new DataContractJsonSerializer(typeof(List<Message>));
+            //m2 = (List<Message>)serializer.ReadObject(stream);
+
+            //response = await client.GetAsync("");
+            //m2 = await response.Content.ReadAsAsync<List<Message>>();
+
+
+
             return View(await _context.Messages.ToListAsync());
         }
 
-        [HttpGet("exit")]
+        [HttpGet("exit", Name ="Exit")]
         public IActionResult Exit()
         {
             GlobalVariables.CurrentUser = "";
             return RedirectToAction("index", "user", "api/user/index/");
         }
 
-        //// GET: Messages/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //FOR ANDROID. Same as Create
+        [Route("send")]     //  api/send   ?
+        [HttpPost]
+        public async Task<JsonResult> Send(Dictionary<string, string> input)
+        {
+            string user, text;
+            //return Json(_context.Messages.ToList()); 
+            input.TryGetValue("Username", out user);
+            input.TryGetValue("Text", out text);
+            Message message = new WebApplication1.Models.Message(text, user);
 
-        //    var message = await _context.Messages
-        //        .SingleOrDefaultAsync(m => m.id == id);
-        //    if (message == null)
-        //    {
-        //        return NotFound();
-        //    }
+            _context.Messages.Add(message);
+            await _context.SaveChangesAsync();
 
-        //    return View(message);
-        //}
-
-        //// GET: Messages/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+            // PAKEISTI (veliau)????
+            return Json(_context.Messages.ToList()); 
+        }
 
         //creates the new text message
         // not idempotent
@@ -89,7 +138,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction("index", "message", "api/message/index/");
         }
 
-        [HttpGet("update")]
+        [HttpGet("update", Name ="Refresh")]
         public IActionResult Update()
         {
             // cia galim dirbti toliau
@@ -97,136 +146,5 @@ namespace WebApplication1.Controllers
             return RedirectToAction("index", "message", "api/message/index/");
         }
 
-        //[HttpGet]
-        //public IActionResult Login([FromBody][Bind("Username,Password")] User user)
-        //{
-        //    //Boolean correct = false;
-        //    User temp = _context.Users.FirstOrDefault(u => u.Username == user.Username);
-        //    try
-        //    {
-        //        if (temp != null && temp.Password == user.Password)
-        //        {
-        //            //correct = true;
-        //            GlobalVariables.CurrentUser = user.Username;
-        //            return RedirectToAction("Index");
-        //        }
-                
-        //    }
-        //    catch (DbUpdateException /* ex */)
-        //    {
-        //        //Log the error (uncomment ex variable name and write a log.
-        //        ModelState.AddModelError("", "Unable to save changes. " +
-        //            "Try again, and if the problem persists " +
-        //            "see your system administrator.");
-        //    }
-        //    //later we'll need to change this into a redirection.
-        //    //so that if everything is allright, then we'll redirect
-        //    //the user into the chatroom. 
-        //    //If something's wrong, we'll redirect the user again to 
-        //    //the log in page with an error message
-        //    // later: redirect to messages
-        //    return RedirectToAction("Message/Index");
-        //}
-
-        //// POST: Messages/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Username,Text")] Message message)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(message);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(message);
-        //}
-
-        //// GET: Messages/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var message = await _context.Messages.SingleOrDefaultAsync(m => m.id == id);
-        //    if (message == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(message);
-        //}
-
-        //// POST: Messages/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Username,Text,id")] Message message)
-        //{
-        //    if (id != message.id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(message);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!MessageExists(message.id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(message);
-        //}
-
-        //// GET: Messages/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var message = await _context.Messages
-        //        .SingleOrDefaultAsync(m => m.id == id);
-        //    if (message == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(message);
-        //}
-
-        //// POST: Messages/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var message = await _context.Messages.SingleOrDefaultAsync(m => m.id == id);
-        //    _context.Messages.Remove(message);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
-
-        //private bool MessageExists(int id)
-        //{
-        //    return _context.Messages.Any(e => e.id == id);
-        //}
     }
 }

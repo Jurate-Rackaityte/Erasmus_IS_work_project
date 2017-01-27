@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:13082/",
-      "sslPort": 0
+        "applicationUrl": "http://chatton.somee.com/",
+        "sslPort": 0
     }
   },
   "profiles": {
@@ -19,7 +19,7 @@
     "WebApplication1": {
         "commandName": "Project",
         "launchBrowser": true,
-        "launchUrl": "http://localhost:13082/api/user/index/",
+        "launchUrl": "/api/user/index/",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         }

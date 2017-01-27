@@ -24,9 +24,8 @@
 <body>
     <div class="wrapper">
         <header>
-            <p class="welcome">Welcome<b></b></p>
+            <p class="welcome">Welcome to <span>Chatton</span><b></b></p>
             <form asp-action="Exit" name="Exit" action="../message/exit/">
-                <!-- make this one a button -->
                 <input name="Exit" type="submit" id="submitmsg" value="Exit">
             </form>
             <!-- <a class="logout" href="User/Index.cshtml"> -->
@@ -36,13 +35,13 @@
         </header>
         <div class="main">
         <section class="chat">
-        <div id="chatbox" asp-action="Index" asp-validation-summary="ModelOnly">
+        <div id="chatbox" asp-action="Index" >
                     @foreach (var m in Model)
             {
                         <p>
-                            @Html.DisplayFor(modelItem => m.Username)
+                            @Html.DisplayFor(model => m.Username)
                             :
-                            @Html.DisplayFor(modelItem => m.Text)
+                            @Html.DisplayFor(model => m.Text)
                         </p>
                     }
                 </div>
