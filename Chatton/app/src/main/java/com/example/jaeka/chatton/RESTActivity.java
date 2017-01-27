@@ -4,9 +4,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class RESTActivity extends AppCompatActivity {
+
+    private Button btn_send, btn_refresh;
+    private EditText input_Msg;
+    private TextView chat_msgs;
+
     private String username;
     private String password;
 
@@ -14,6 +21,11 @@ public class RESTActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest);
+
+        btn_send = (Button) findViewById(R.id.btn_send);
+        btn_refresh = (Button) findViewById(R.id.btn_refresh);
+        input_Msg = (EditText) findViewById(R.id.input_Msg);
+        chat_msgs = (TextView) findViewById(R.id.chat_msgs);
 
         Intent myIntent = getIntent();
         username = myIntent.getStringExtra("username");
@@ -27,7 +39,7 @@ public class RESTActivity extends AppCompatActivity {
     }
 
     private  class RESTTask extends AsyncTask<Void, Void, String> {
-        private static final String SERVICE_URL = "http://ascasda/Messages";
+        private static final String SERVICE_URL = "http://ascasda/Messages";  //here I need to put a real URL of where are the messages maybe?
 
         @Override
         protected String doInBackground(Void... params) {
