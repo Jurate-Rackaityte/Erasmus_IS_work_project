@@ -22,19 +22,15 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Users
-        [HttpGet("Index")]
+        [Route("")]
+        [Route("user")]
+        [Route("user/index")]
+        [HttpGet("Index", Name = "Home")]
         public IActionResult Index()
         {
             
-            return View(_context.Users);
+            return View();
         }
-
-
-        //// GET: Users/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
 
         //// POST: Users/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -54,9 +50,10 @@ namespace WebApplication1.Controllers
 
         // not idempotent
         //Register a new user. Aka create new user in the database
+        [Route("user/create")]
         [HttpPost]
         // [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Dictionary<string,string> d)
+        public IActionResult Create(Dictionary<string,string> d)
         //public IActionResult Create([Bind("Username,Password1, Password2")] Register r)
         {
             string user, p1, p2;
@@ -81,7 +78,7 @@ namespace WebApplication1.Controllers
                    // {
                         //return Ok("!!!Pralindau pro kontrole!!!");
                     _context.Add(tempUser);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                     //GlobalVariables.Users.Add(tempUser);
                     //return Ok("Uzregistravau!");
                         //userCreated = true;
@@ -101,9 +98,30 @@ namespace WebApplication1.Controllers
             //ATTENTION! the place to redirect might change
             return
             //Ok("ALEHANDER");
-            RedirectToAction("Index");
+            RedirectToAction("index", "user", "api/user/index/");
             //Redirect(Request.QueryString["r"]);
         }
+
+        //FOR ANDROID. Same as Login, BUT if the username and/or password was wrong, than it return the empty string
+        [Route("user/login")]           //   api/user/login   
+        [HttpPost]
+        public JsonResult AndroidLogin(Dictionary<string, string> r)
+        {
+            string user, p;
+            r.TryGetValue("Username", out user);
+            r.TryGetValue("Password", out p);
+            User temp = _context.Users.FirstOrDefault(u => u.Username == user);
+
+            if (!temp.Username.Equals("") && temp.Password == p)
+            {
+                //correct = true;
+                GlobalVariables.CurrentUser = user;
+                //return Ok("Prisijungiau!");
+                return Json(user);
+            }
+            return Json("");
+        }
+
         [Route("login")]
         [HttpPost]
         public IActionResult Login(Dictionary<string, string> r)
@@ -112,10 +130,11 @@ namespace WebApplication1.Controllers
             string user, p;
             r.TryGetValue("Username", out user);
             r.TryGetValue("Password", out p);
+            
             User temp = _context.Users.FirstOrDefault(u => u.Username == user);
             //return Ok(temp.Username + "\n"+temp.Password+"\n"+p);
             //try { 
-                if (!temp.Username.Equals("") && temp.Password == p)
+                if (temp.Password == p)
                 {
                     //correct = true;
                     GlobalVariables.CurrentUser = user;
@@ -125,16 +144,7 @@ namespace WebApplication1.Controllers
             // }
             //catch (DbUpdateException /* ex */)
             //{
-            ////Log the error (uncomment ex variable name and write a log.
-            //ModelState.AddModelError("", "Login username or password " +
-            //    "is wrong. Try again. ");
-            //}
-            //later we'll need to change this into a redirection.
-            //so that if everything is allright, then we'll redirect
-            //the user into the chatroom. 
-            //If something's wrong, we'll redirect the user again to 
-            //the log in page with an error message
-            // later: redirect to messages
+
             return RedirectToAction("index", "user", "api/user/index/");
         }
 
