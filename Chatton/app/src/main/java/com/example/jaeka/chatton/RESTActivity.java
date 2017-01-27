@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,6 +37,20 @@ public class RESTActivity extends AppCompatActivity {
 
         RESTTask restTask = new RESTTask();
         restTask.execute();
+
+
+
+        btn_refresh.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+
+            }
+        }
+
+        );
     }
 
     private  class RESTTask extends AsyncTask<Void, Void, String> {
