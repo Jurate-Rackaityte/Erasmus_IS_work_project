@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using WebApplication1.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks.Dataflow;
 
 namespace WebApplication1
 {
@@ -48,6 +49,9 @@ namespace WebApplication1
              {
                  jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
              });
+            services.Configure<IISOptions>(options => {
+                //AutomaticAuthentication = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -79,6 +83,9 @@ namespace WebApplication1
             
             DbInitializer.Initialize(context);
             app.UseStaticFiles();
+            //app.UseStatusCodePages(context => context.HttpContext.Response.SendAsync("Handler, status code: " + context.HttpContext.Response.StatusCode, "text/plain"));
+            app.UseStatusCodePages();
+
         }
     }
 }

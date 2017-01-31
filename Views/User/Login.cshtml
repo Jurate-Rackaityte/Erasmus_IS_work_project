@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+    Next: let's try to exclude the database and THEN try it again.
+    Both with this window and without it
+*@
+
+@{
+    ViewData["Title"] = "Exit";
+}
+<!-- <p><a href="messages/index.html">Successfully logged in!</p> -->
+<head>
+    <meta charset="utf-8">
+    <title>Chatton</title>
+
+    <meta name="author" content="" lang="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        header,section{text-align:center}#chatbox,#usermsg{border:1px solid #a6a6a6}body{margin:0 auto;max-width:1040px;min-width:300px}
+        .wrapper{width:100%;margin:auto}header{float:left;width:100%;height:80px;padding:10px 0;background-color:#ffaa80}header p{float:left;font-size:24px}
+        .login,.logout{float:right}.main{display:flex;flex-flow:row-reverse wrap;clear:both;min-height:400px;background-color:#e6e6e6}section{margin:1%;background-color:#f3f3f3}
+        .login{width:auto;flex:1}.chat,.register{float:left;width:auto}.register{flex:1}.register form{text-align:right;padding-right:20%}.chat{margin:1% 20%}footer{clear:both;background-color:#ffaa80}
+        #chatbox{text-align:left;margin:1% 1% 25px;padding:10px;background:#fff;height:300px;width:auto;overflow:auto}#usermsg{width:90%}#submit{width:60px}
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <p>Welcome to <span>Chatton</span>    </p>
+        </header>
+        <div class="main">
+            <section class="register">
+                <form method="post" asp-action="Exit" name="Exit" action="../message/exit/">
+                    <p>The Username or password was wrong. Try again.</p>
+                    <input name="Exit" type="submit" id="submitmsg" value="Get back">
+                </form>
+            </section>
+            <p>
+                <a href="Index.cshtml">Log In</a>
+            </p>
+        </div>
+        <footer>
+            Jurate & Naty 2016/2017
+        </footer>
+    </div>
+</body>

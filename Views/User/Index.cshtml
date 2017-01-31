@@ -1,0 +1,83 @@
+﻿@model IEnumerable<WebApplication1.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <meta charset="utf-8">
+    <title>Chatton</title>
+
+    <meta name="author" content="" lang="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        header,section{text-align:center}#chatbox,#usermsg{border:1px solid #a6a6a6}body{margin:0 auto;max-width:1040px;min-width:300px}
+        .wrapper{width:100%;margin:auto}header{float:left;width:100%;height:80px;padding:10px 0;background-color:#ffaa80}header p{float:left;font-size:24px}
+        .login,.logout{float:right}.main{display:flex;flex-flow:row-reverse wrap;clear:both;min-height:400px;background-color:#e6e6e6}section{margin:1%;background-color:#f3f3f3}
+        .login{width:auto;flex:1}.chat,.register{float:left;width:auto}.register{flex:1}.register form{text-align:right;padding-right:20%}.chat{margin:1% 20%}footer{clear:both;background-color:#ffaa80}
+        #chatbox{text-align:left;margin:1% 1% 25px;padding:10px;background:#fff;height:300px;width:auto;overflow:auto}#usermsg{width:90%}#submit{width:60px}
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <p>Welcome to <span>Chatton</span>    </p>
+        </header>
+        <div class="main">
+            <section class="login">
+                <h2>
+                    Login
+                </h2>
+                <form method="post" asp-action="Login" asp-controller="User" action="../login/">
+                    <p><label>Username: <input name="Username" asp-for="username" type="text" placeholder="Username" required size="25"></label></p>
+                    <p><label>Password: <input name="Password" asp-for="password" type="password" placeholder="Password" required size="25"></label></p>
+                    <p><input type="submit" value="Login!" /></p>
+                </form>
+            </section>
+            <!--
+                <section class="register">
+                <h2><a href="Create.cshtml">
+                    Register
+                    </a>
+                </h2>
+            </section>
+            -->
+            
+            <section class="register">
+                <h2>
+                    Register
+                </h2>
+                <p>Warning: password security is very low, so we recommend using an easy password.</p>
+                
+                <form method="post" action="../user/create">
+                    <div>
+                        <div>
+                            <p><label>Username: <input name="Username" asp-for="Username" type="text" placeholder="Username" required size="25"></label></p>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <p><label>Password: <input name="Password1" asp-for="Password1" type="password" required size="25" placeholder="Password"></label></p>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <p><label>Confirm password: <input name="Password2" asp-for="Password2" type="password" required size="25" placeholder="Password"></label></p>
+                        </div>
+                        
+                        <!-- <p> -->
+                        <input type="submit" value="Register" />
+                        <!-- <input type="reset" value="Clear" /> -->
+                        <!-- </p> -->
+                    </div>
+
+                </form>
+            </section>
+        </div>
+        <footer>
+             Jurate & Naty 2016/2017
+        </footer>
+
+    </div>
+</body>

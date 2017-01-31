@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace WebApplication1.Controllers
 {
@@ -103,6 +105,7 @@ namespace WebApplication1.Controllers
         }
 
         //FOR ANDROID. Same as Login, BUT if the username and/or password was wrong, than it return the empty string
+        //parse Json
         [Route("user/login")]           //   api/user/login   
         [HttpPost]
         public JsonResult AndroidLogin(Dictionary<string, string> r)
@@ -122,19 +125,30 @@ namespace WebApplication1.Controllers
             return Json("");
         }
 
-        [Route("login")]
+        [Route("login/{id?}")]
         [HttpPost]
-        public IActionResult Login(Dictionary<string, string> r)
+        public IActionResult Login(
+            //Dictionary<string, string> r
+            //dynamic input
+            JObject json
+            )
         {
             //Boolean correct = false;
             string user, p;
-            r.TryGetValue("Username", out user);
-            r.TryGetValue("Password", out p);
-            
+            //r.TryGetValue("Username", out user);
+            //r.TryGetValue("Password", out p);
+            //string json = j.ToString();
+            //JToken token = JObject.Parse(input);
+            //user = (string)token.SelectToken("Username");
+            //p = (string)token.SelectToken("Password");
+            user = json["Username"].ToString();
+            p = json["Password"].ToString();
+
+            //User x = JsonConvert.DeserializeObject<User>(json);
             User temp = _context.Users.FirstOrDefault(u => u.Username == user);
             //return Ok(temp.Username + "\n"+temp.Password+"\n"+p);
             //try { 
-                if (temp.Password == p)
+                if (temp.Password.Equals(p))
                 {
                     //correct = true;
                     GlobalVariables.CurrentUser = user;

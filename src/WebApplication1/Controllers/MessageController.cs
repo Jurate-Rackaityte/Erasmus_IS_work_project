@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebApplication1.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebApplication1.Controllers
 
         //FOR ANDROID. Same as Index & Update ???
         [HttpGet("Android")]            //  api/Message/Android
-        public JsonResult Chatroom()
+        public JsonResult Android()
         {
             return Json(_context.Messages.ToList());
         }
@@ -51,21 +52,34 @@ namespace WebApplication1.Controllers
         }
 
         //FOR ANDROID. Same as Create
-        [Route("send")]     //  api/send   ?
+        //parse Json
+        [Route("Message/Send/{id?}")]     //  api/Message/Send   
         [HttpPost]
-        public async Task<JsonResult> Send(Dictionary<string, string> input)
+        public IActionResult Send(dynamic input)
         {
+            //var client = new HttpClient();
+            ////client.BaseAddress = new Uri("http://localhost:1302/api/");
+            //client.BaseAddress = new Uri("applicationUrl");
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //return RedirectToAction("Android", "message", "api/Message/Android");
+            JToken token = JObject.Parse(input);
+
             string user, text;
             //return Json(_context.Messages.ToList()); 
-            input.TryGetValue("Username", out user);
-            input.TryGetValue("Text", out text);
+            //input.TryGetValue("Username", out user);
+            //input.TryGetValue("Text", out text);
+
+            user = (string)token.SelectToken("Username");
+            text = (string)token.SelectToken("Text");
+
             Message message = new WebApplication1.Models.Message(text, user);
 
             _context.Messages.Add(message);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             // PAKEISTI (veliau)????
-            return Json(_context.Messages.ToList());
+            return RedirectToAction("Android", "message", "api/Message/Android");
         }
 
         //creates the new text message
