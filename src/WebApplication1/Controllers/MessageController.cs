@@ -16,6 +16,7 @@ using System.Text;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
@@ -48,38 +49,44 @@ namespace WebApplication1.Controllers
         public IActionResult Exit()
         {
             GlobalVariables.CurrentUser = "";
-            return RedirectToAction("index", "user", "api/user/index/");
+            return RedirectToAction("index", "User", "api/User/index/");
         }
 
         //FOR ANDROID. Same as Create
         //parse Json
-        [Route("Message/Send/{id?}")]     //  api/Message/Send   
+        [AllowAnonymous]
+        [ActionName("Send")]
+        [Route("Send/{id?}")]     //  api/message/Send   
         [HttpPost]
-        public IActionResult Send(dynamic input)
+        public IActionResult Send([FromBody]
+            //dynamic input
+            Dictionary<string, string> t
+            )
         {
+            
             //var client = new HttpClient();
             ////client.BaseAddress = new Uri("http://localhost:1302/api/");
             //client.BaseAddress = new Uri("applicationUrl");
             //client.DefaultRequestHeaders.Accept.Clear();
             //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             //return RedirectToAction("Android", "message", "api/Message/Android");
-            JToken token = JObject.Parse(input);
+            //JToken token = JObject.Parse(input);
 
             string user, text;
             //return Json(_context.Messages.ToList()); 
-            //input.TryGetValue("Username", out user);
-            //input.TryGetValue("Text", out text);
+            t.TryGetValue("Username", out user);
+            t.TryGetValue("Text", out text);
 
-            user = (string)token.SelectToken("Username");
-            text = (string)token.SelectToken("Text");
-
+            //user = (string)token.SelectToken("Username");
+            //text = (string)token.SelectToken("Text");
+            //return Ok(user);
             Message message = new WebApplication1.Models.Message(text, user);
 
             _context.Messages.Add(message);
             _context.SaveChanges();
 
             // PAKEISTI (veliau)????
-            return RedirectToAction("Android", "message", "api/Message/Android");
+            return RedirectToAction("Android", "message", "api/message/Android");
         }
 
         //creates the new text message

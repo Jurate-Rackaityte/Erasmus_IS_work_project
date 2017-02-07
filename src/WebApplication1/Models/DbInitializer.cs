@@ -14,20 +14,18 @@ namespace WebApplication1.Models
         {
             context.Database.EnsureCreated();
 
-            if (context.Messages.Any())
-                return;
-            var messages = new Message("Hello World! Welcome to Chatton.", "HelloWorld");
-            context.Messages.Add(messages);
-            context.SaveChanges();
-
             // Look for any users
             if (context.Users.Any())
             {
-                Console.WriteLine("CHIKI BRIKI");
                 return;     // DB has been seeded
             }
-            else
+             else
             {
+                 //if (context.Messages.Any())
+                 //    return;
+                 var messages = new Message("Hello World! Welcome to Chatton.", "HelloWorld");
+                 context.Messages.Add(messages);
+                 context.SaveChanges();
                  var users = new User[]
                 {
                     new User("HelloWorld", "Hello"),
@@ -42,6 +40,9 @@ namespace WebApplication1.Models
                 Console.WriteLine("TURIM VARTOTOJU");
             }
 
+           
+
+           
             
         }
     }

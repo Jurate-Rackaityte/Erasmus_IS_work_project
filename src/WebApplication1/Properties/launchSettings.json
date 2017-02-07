@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:13082/",
-      "sslPort": 0
+        "applicationUrl": "http://chatton.azurewebsites.net/api/user/index/",
+        "sslPort": 0
     }
   },
   "profiles": {
