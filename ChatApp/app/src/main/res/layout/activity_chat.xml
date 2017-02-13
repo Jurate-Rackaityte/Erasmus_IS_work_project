@@ -24,12 +24,13 @@
             android:layout_weight="0.15">
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:text="Messages here"
+                android:layout_height="match_parent"
+                android:id="@+id/scrV">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:id="@+id/chat_msgs" />
             </ScrollView>
         </LinearLayout>
@@ -42,9 +43,9 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="textPersonName"
                 android:id="@+id/input_Msg"
-                android:layout_weight="1"
-                android:text="Write your message here..." />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,14 +57,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Send"
-                android:id="@+id/btn_send"
-                android:onClick="sendMessage"/>
+                android:id="@+id/btn_send" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Refresh"
-                android:id="@+id/btn_refresh"
-                android:onClick="refresh"/>
+                android:id="@+id/btn_refresh" />
         </LinearLayout>
 
     </LinearLayout>

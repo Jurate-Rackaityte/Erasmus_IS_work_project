@@ -3,7 +3,6 @@ package com.example.jaeka.chatapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +45,8 @@ public class Login extends AppCompatActivity {
         ProgressDialog pdLoading = new ProgressDialog(Login.this);
         HttpURLConnection conn;
         URL url = null;
+        String usr;
+        String pwd;
 
         @Override
         protected void onPreExecute(){
@@ -105,20 +106,23 @@ public class Login extends AppCompatActivity {
                     whatev = "unsuccessful";
                     //return ("unsuccessful");
                 }
-                conn.disconnect();
+
             }catch (IOException e){
                 e.printStackTrace();
                 return "exception";
+            }finally {
+                conn.disconnect();
+                return whatev;
             }
-
-            return whatev;
         }
 
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String whatev){
             pdLoading.dismiss();
-            if (result != null){
+            if (whatev != null && whatev != "unsuccessful"){
                 Intent intent = new Intent(Login.this, Chat.class);
+                intent.putExtra("usr", this.usr);
+                intent.putExtra("pwd", this.pwd);
                 startActivity(intent);
                 Login.this.finish();
             }else {
